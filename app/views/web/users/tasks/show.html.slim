@@ -1,0 +1,31 @@
+h3 Task
+
+dl.dl-horizontal
+  dt Name:
+  dd = @task.name
+  
+  - if @task.description
+    dt Description:
+    dd = @task.description
+  
+  - if current_user.is_admin?
+    dt User:
+    dd = @task.user.email
+  
+  dt State:
+  dd = @task.state.titleize
+  
+  dt Created at:
+  dd = @task.created_at
+  
+  - unless @task.attachment.file.nil?
+    dt Attachment:
+    dd
+      - if File.extname(@task.attachment_identifier).in?(%w(.jpg .jpeg .gif .png))
+        = image_tag(@task.attachment.url)
+      - else
+        = link_to 'Download', @task.attachment.url
+
+= link_to 'Edit', edit_user_task_path(current_user, @task), class: 'btn btn-warning'
+|&nbsp;
+= link_to 'Back', user_tasks_path(current_user), class: 'btn btn-default'

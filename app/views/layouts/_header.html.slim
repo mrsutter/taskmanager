@@ -1,0 +1,9 @@
+.navbar.navbar-default
+  .navbar-header
+    a.navbar-brand href="/" TaskManager
+  ul.nav.navbar-nav.pull-right
+    li
+      - if current_user
+        = link_to 'Sign out', session_path(current_user), method: :delete
+      - else
+        = link_to 'Sign in', new_session_path

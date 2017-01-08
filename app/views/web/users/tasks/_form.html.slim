@@ -1,0 +1,22 @@
+.row
+  .col-md-8
+    = simple_form_for @task, url: @url,
+                      html: { class: 'form-horizontal' },
+                      wrapper: :horizontal_form do |f|
+      = f.input :name
+      = f.input :description
+      = f.input :state, label: 'Status', collection: Task.aasm.states_for_select
+      - if current_user.is_admin?
+        = f.input :user_id, collection: User.all.map { |u| [u.email, u.id] }
+      = f.input :attachment
+      .col-md-6.col-md-offset-3
+        = f.button :submit, class: 'btn btn-success'
+        |&nbsp;
+        = link_to 'Back', user_tasks_path(current_user), class: 'btn btn-default'
+        - if @task.persisted? && current_user.is_admin?
+          |&nbsp;
+          = link_to 'Delete',
+                    user_task_path(current_user, @task),
+                    method: :delete,
+                    data: { confirm: 'Are you sure?' },
+                    class: 'text-danger'

@@ -1,0 +1,22 @@
+- if @tasks.blank?
+  h5 There is no tasks yet
+- else
+  table.table.table-striped
+    thead
+      tr
+        th ID
+        th Name
+        th User
+        th Created At
+    tbody
+      - @tasks.each do |task|
+        tr
+          td
+            = task.id
+          td
+            = task.name
+          td
+            = task.user.email
+          td
+            = task.created_at
+    
